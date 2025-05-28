@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Focus Timer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1><span class="g">F</span><span class="o">o</span><span class="y">c</span><span class="g2">u</span><span class="b">s</span> Timer</h1>
+    <div class="timer-box">
+      <h2 id="timer">25:00</h2>
+      <div class="buttons">
+        <button onclick="startTimer()">Start</button>
+        <button onclick="pauseTimer()">Pause</button>
+        <button onclick="resetTimer()">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let time = 25 * 60;
+    let timerId;
+    let isRunning = false;
+
+    function updateDisplay() {
+      const minutes = Math.floor(time / 60).toString().padStart(2, "0");
+      const seconds = (time % 60).toString().padStart(2, "0");
+      document.getElementById("timer").textContent = `${minutes}:${seconds}`;
+    }
+
+    function startTimer() {
+      if (isRunning) return;
+      isRunning = true;
+      timerId = setInterval(() => {
+        if (time > 0) {
+          time--;
+          updateDisplay();
+        } else {
+          clearInterval(timerId);
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      clearInterval(timerId);
+      isRunning = false;
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      time = 25 * 60;
+      updateDisplay();
+    }
+
+    updateDisplay(); // initialize display
+  </script>
+</body>
+</html>
